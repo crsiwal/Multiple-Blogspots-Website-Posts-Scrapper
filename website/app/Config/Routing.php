@@ -16,8 +16,7 @@ use CodeIgniter\Config\Routing as BaseRouting;
 /**
  * Routing configuration
  */
-class Routing extends BaseRouting
-{
+class Routing extends BaseRouting {
     /**
      * An array of files that contain route definitions.
      * Route files are read in order, with the first match
@@ -43,7 +42,7 @@ class Routing extends BaseRouting
      *
      * Default: 'Home'
      */
-    public string $defaultController = 'Home';
+    public string $defaultController = 'Blogs';
 
     /**
      * The default method to call on the controller when no other
