@@ -39,6 +39,12 @@ class CreateBlogsTable extends Migration {
                 'default' => 0,
                 'comment' => 'How much total posts in this blog resource',
             ],
+            'scraped' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'default' => 0,
+                'comment' => 'How much posts are scraped and added to database',
+            ],
             'scheduled' => [
                 'type' => 'INT',
                 'unsigned' => true,

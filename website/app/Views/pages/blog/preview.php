@@ -1,4 +1,13 @@
 <div class="min-vh-100">
+	<?php if (session()->has('error')) : ?>
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<div class="alert alert-danger">
+					<?= session('error') ?>
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<?= form_open('blogs/new', ['class' => 'd-flex', 'id' => 'htmlform']) ?>
@@ -6,12 +15,36 @@
 			<button type="submit" class="btn btn-primary ms-3">Preview</button>
 			<?= form_close(); ?>
 		</div>
+		<?php
+		if (isset($blog["contentallowed"])) {
+			if ($blog["contentallowed"] == true) {
+		?>
+				<div class="col-12 col-md-6">
+					<?= form_open('blogs/add', ['class' => 'd-flex', 'id' => 'htmlform'], ["url" => $url]) ?>
+					<button type="submit" class="btn btn-primary ms-1 px-5">Add Blog</button>
+					<?= form_close(); ?>
+				</div>
+			<?php
+			} else {
+			?>
+				<div class="col-12 col-md-6">
+					<button type="submit" class="btn btn-danger ms-1 px-5">Only summery available</button>
+				</div>
+		<?php
+			}
+		}
+		?>
 	</div>
+
 	<?php
 	if (isset($blog) && is_array($blog)) {
 	?>
-		<div class="row mt-5">
-			<div class="col-12">
+		<div class="row mt-4">
+			<div class="col-12 d-flex">
+				<p><b>Total Posts:</b> <?= $blog["total"]; ?></p>
+				<p class="ps-3"><b>Category:</b> <?= count($blog["category"]); ?></p>
+			</div>
+			<div class="col-12 mt-1">
 				<div class="list-group">
 					<?php
 					if (isset($blog["posts"]) && count($blog["posts"]) > 0) {
@@ -32,6 +65,4 @@
 	<?php
 	}
 	?>
-
-
 </div>

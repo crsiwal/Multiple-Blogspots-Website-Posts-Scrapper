@@ -56,7 +56,7 @@ class CreatePostsTable extends Migration {
                 'type' => 'TINYINT',
                 'constraint' => 4,
                 'default'    => 0,
-                'comment' => 'Status of post 0:pending,1:Draft,2:Scheduled,3:Posted,4:Skipped',
+                'comment' => 'Status of post 0:pending,1:Scraped,2:Draft,3:Skipped,4:Scheduled,5:Posted',
             ],
             'posttime' => [
                 'type' => 'DATETIME',

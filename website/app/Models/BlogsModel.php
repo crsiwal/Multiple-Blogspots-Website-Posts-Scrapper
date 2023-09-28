@@ -15,7 +15,7 @@ class BlogsModel extends Model {
     protected $allowedFields    = ["userid", "gbid", "title", "url", "posts", "scheduled", "posted"];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

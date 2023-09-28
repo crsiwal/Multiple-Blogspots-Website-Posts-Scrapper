@@ -1,3 +1,6 @@
+<?php
+$slug = uri_string();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,7 +82,7 @@
 		<hr>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<a href="<?= base_url(); ?>" class="nav-link rounded-0 active" aria-current="page">
+				<a href="<?= base_url(); ?>" class="nav-link <?= trim($slug, "/") == "" ? "rounded-0 active" : " link-dark"; ?>" aria-current="page">
 					<svg class="bi me-2" width="16" height="16">
 						<use xlink:href="#home"></use>
 					</svg>
@@ -87,7 +90,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url("blogs/new"); ?>" class="nav-link link-dark">
+				<a href="<?= base_url("blogs/new"); ?>" class="nav-link <?= trim($slug, "/") == "blogs/new" ? "rounded-0 active" : " link-dark"; ?>">
 					<svg class="bi me-2" width="16" height="16">
 						<use xlink:href="#speedometer2"></use>
 					</svg>

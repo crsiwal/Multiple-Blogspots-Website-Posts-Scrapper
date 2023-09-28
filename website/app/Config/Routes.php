@@ -10,4 +10,5 @@ $routes->group('blogs', function ($routes) {
 	$routes->get('', 'Blogs::index');
 	$routes->get('new', 'Blogs::preview');
 	$routes->post('new', 'Blogs::preview');
+	$routes->post('add', 'Blogs::addBlog');
 });
