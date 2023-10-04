@@ -4,8 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
-class App extends BaseConfig
-{
+class App extends BaseConfig {
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
@@ -109,7 +108,7 @@ class App extends BaseConfig
      *
      * @see https://www.php.net/manual/en/timezones.php for list of timezones supported by PHP.
      */
-    public string $appTimezone = 'UTC';
+    public string $appTimezone = 'Asia/Kolkata';
 
     /**
      * --------------------------------------------------------------------------

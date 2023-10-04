@@ -12,7 +12,7 @@ class BlogsModel extends Model {
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["userid", "gbid", "title", "url", "posts", "scheduled", "posted"];
+    protected $allowedFields    = ["userid", "gbid", "title", "url", "posts", "scheduled", "posted", "active"];
 
     // Dates
     protected $useTimestamps = true;

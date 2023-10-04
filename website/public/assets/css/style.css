@@ -1,0 +1,10 @@
+img.single-post-img {
+	max-height: 359px;
+	width: 100%;
+}
+
+/* TinyMCE css */
+.tox-notifications-container,
+.tox-statusbar__branding {
+	display: none !important;
+}

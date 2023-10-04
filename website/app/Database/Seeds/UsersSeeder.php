@@ -14,7 +14,7 @@ class UsersSeeder extends Seeder {
                 'salt' => 'randompass',
                 'status' => 1, // Active user
                 'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => null, // No updates yet
+                'updated_at' => date('Y-m-d H:i:s'), // No updates yet
                 'deleted_at' => null, // Not deleted
             ],
         ];

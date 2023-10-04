@@ -57,6 +57,18 @@ class CreateBlogsTable extends Migration {
                 'default' => 0,
                 'comment' => 'How much posts posted to blogspot from this blog resource',
             ],
+            'rejected' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'default' => 0,
+                'comment' => 'How much posts rejected from this blog resource',
+            ],
+            'active' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 1,
+                'comment' => 'Is this blog active to get scrap',
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'comment' => 'Timestamp of when the post was created',

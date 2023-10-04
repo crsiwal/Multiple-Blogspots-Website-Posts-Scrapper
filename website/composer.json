@@ -12,6 +12,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "codeigniter4/framework": "^4.0",
+        "kub-at/php-simple-html-dom-parser": "^1.9",
         "twbs/bootstrap": "5.0.2"
     },
     "require-dev": {
