@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model {
+class BloggerModel extends Model {
     protected $DBGroup          = 'default';
-    protected $table            = 'users';
+    protected $table            = 'bloggers';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["gid", "name", "email", "picture", "password", "salt", "blogcount", "status"];
+    protected $allowedFields    = [];
 
     // Dates
     protected $useTimestamps = false;

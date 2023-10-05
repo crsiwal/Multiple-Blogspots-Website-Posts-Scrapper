@@ -5,7 +5,14 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Blogs::index');
+$routes->group('/', function ($routes) {
+	$routes->get('', 'Blogs::index');
+	$routes->get('login', 'Login::index');
+});
+
+$routes->group('redirect', function ($routes) {
+	$routes->get('google', 'Redirects::google');
+});
 
 $routes->group('blogs', function ($routes) {
 	$routes->get('', 'Blogs::index');
@@ -24,6 +31,10 @@ $routes->group('posts', function ($routes) {
 	$routes->get('reject/(:num)', 'Posts::rejectPost/$1');
 	$routes->get('edit/(:num)', 'Posts::editPost/$1');
 	$routes->post('schedule', 'Posts::schedulePost');
+});
+
+$routes->group('blogspot', function ($routes) {
+	$routes->get('', 'Blogspot::index');
 });
 
 $routes->cli('tools/crawler', 'BlogsTool::crawler');

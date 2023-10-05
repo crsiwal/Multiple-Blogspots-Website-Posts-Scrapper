@@ -13,6 +13,11 @@ class CreateUsersTable extends Migration {
                 'auto_increment' => true,
                 'comment' => 'User uniqe id',
             ],
+            'gid' => [
+                'type' => 'VARCHAR',
+                'constraint' => 32,
+                'comment' => 'User google unique id',
+            ],
             'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 128,
@@ -22,6 +27,11 @@ class CreateUsersTable extends Migration {
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'comment' => 'User email address',
+            ],
+            'picture' => [
+                'type' => 'VARCHAR',
+                'constraint' => 1024,
+                'comment' => 'User profile picture url',
             ],
             'password' => [
                 'type' => 'VARCHAR',
@@ -33,24 +43,29 @@ class CreateUsersTable extends Migration {
                 'constraint' => 64,
                 'comment' => 'Random salt for create encrypted password',
             ],
+            'blogcount' => [
+                'type' => 'SMALLINT',
+                'unsigned' => true,
+                'comment' => 'Number of blogs of user',
+            ],
             'status' => [
                 'type' => 'TINYINT',
                 'default'    => 0,
-                'comment' => 'Status of post 0:Inactive,1:Active',
+                'comment' => 'Status of user 0:Inactive,1:Active',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
-                'comment' => 'Timestamp of when the post was created',
+                'comment' => 'Timestamp of when the user was created',
             ],
             'updated_at' => [
                 'type' => 'DATETIME',
                 'default' => null,
-                'comment' => 'Timestamp of when the post was last updated',
+                'comment' => 'Timestamp of when the user was last updated',
             ],
             'deleted_at' => [
                 'type' => 'DATETIME',
                 'default' => null,
-                'comment' => 'Timestamp of when the post was marked deleted',
+                'comment' => 'Timestamp of when the user was marked deleted',
             ],
         ]);
         $this->forge->addKey('id', true);
