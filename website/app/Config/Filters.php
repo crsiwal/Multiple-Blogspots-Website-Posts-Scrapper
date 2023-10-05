@@ -9,8 +9,7 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 
-class Filters extends BaseConfig
-{
+class Filters extends BaseConfig {
     /**
      * Configures aliases for Filter classes to
      * make reading things nicer and simpler.
@@ -24,6 +23,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'auth' => \App\Filters\AuthFilter::class,
     ];
 
     /**
@@ -35,6 +35,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
+            'auth' => ['except' => ['auth']] // Apply 'auth' filter to all controllers
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',

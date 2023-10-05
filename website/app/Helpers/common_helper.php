@@ -22,5 +22,29 @@ function menulink($name, $icon, $path = "", $activePath = "", $brand = false) {
 }
 
 function is_login() {
-	return false;
+	return (login_user_id()) ? TRUE : FALSE;
+}
+
+function login_user_id() {
+	if (session()->has("user_loggedin")) {
+		return (session("user_loggedin")) ? session("login_user_id") : FALSE;
+	}
+	return FALSE;
+}
+
+function login_user($userid) {
+	var_dump($userid);
+	if (session()->has("user_loggedin") && session("user_loggedin")) {
+		return FALSE;
+	} else {
+		session()->set([
+			"login_user_id" => $userid,
+			"user_loggedin" => TRUE
+		]);
+	}
+	return FALSE;
+}
+
+function logout() {
+	session()->destroy();
 }

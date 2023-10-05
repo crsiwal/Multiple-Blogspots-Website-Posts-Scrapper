@@ -16,7 +16,7 @@ class Posts extends BaseController {
     public function blogPost($blog_id): string {
         $data['posts'] = $this->postModel->where([
             "blogid" => $blog_id,
-            "status" => 1,
+            "status" => 1, // Scraped
         ])->limit(10)->find();
         return view('header') . view('pages/posts/view', $data) . view('footer');
     }
@@ -37,7 +37,7 @@ class Posts extends BaseController {
             $data['next'] = $this->postModel->where([
                 "blogid" => $data["post"]["blogid"],
                 "id >" => $data['post']["id"],
-                "status" => 1,
+                "status" => 1, // Scraped
             ])->limit(1)->first();
             $data['post']["images"] = [];
             $dom = HtmlDomParser::str_get_html($data['post']["content"]);
@@ -77,7 +77,7 @@ class Posts extends BaseController {
     public function editPost($post_id) {
         $data['post'] = $this->postModel->where([
             "id" => $post_id,
-            "status" => 1,
+            "status" => 1, // Scraped
         ])->first();
 
         if (isset($data['post']["id"])) {

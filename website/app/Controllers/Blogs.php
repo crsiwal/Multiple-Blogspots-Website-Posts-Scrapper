@@ -5,9 +5,10 @@ namespace App\Controllers;
 use App\Models\BlogsModel;
 
 class Blogs extends BaseController {
+
     public function index(): string {
         $blogsModel = new BlogsModel();
-        $data['blogs'] = $blogsModel->findAll();
+        $data['blogs'] = $blogsModel->where("userid", login_user_id())->find();
         return view('header') . view('pages/blog/view', $data) . view('footer');
     }
 
@@ -43,7 +44,7 @@ class Blogs extends BaseController {
                     $query = $blogsModel->select('id')->where('gbid', $blog["gbid"])->get();
                     if ($query->getNumRows() == 0) {
                         $insert = $blogsModel->insert([
-                            "userid" => 1,
+                            "userid" => login_user_id(),
                             "gbid" => $blog["gbid"],
                             "title" => $blog["title"],
                             "url" => isset($blog["links"]["alternate"]) ? $blog["links"]["alternate"] : $data["url"],

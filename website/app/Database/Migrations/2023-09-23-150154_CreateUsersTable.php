@@ -28,6 +28,11 @@ class CreateUsersTable extends Migration {
                 'constraint' => 255,
                 'comment' => 'User email address',
             ],
+            'vemail' => [
+                'type' => 'TINYINT',
+                'default'    => 0,
+                'comment' => 'Email verified 0:No,1:Yes',
+            ],
             'picture' => [
                 'type' => 'VARCHAR',
                 'constraint' => 1024,
@@ -42,6 +47,11 @@ class CreateUsersTable extends Migration {
                 'type' => 'VARCHAR',
                 'constraint' => 64,
                 'comment' => 'Random salt for create encrypted password',
+            ],
+            'gender' => [
+                'type' => 'VARCHAR',
+                'constraint' => 10,
+                'comment' => 'User gender',
             ],
             'blogcount' => [
                 'type' => 'SMALLINT',

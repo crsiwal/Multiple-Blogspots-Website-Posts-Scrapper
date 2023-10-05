@@ -7,11 +7,12 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->group('/', function ($routes) {
 	$routes->get('', 'Blogs::index');
-	$routes->get('login', 'Login::index');
+	$routes->get('login', 'Auth::login');
+	$routes->get('logout', 'Auth::logout');
 });
 
 $routes->group('redirect', function ($routes) {
-	$routes->get('google', 'Redirects::google');
+	$routes->get('google', 'Auth::google');
 });
 
 $routes->group('blogs', function ($routes) {

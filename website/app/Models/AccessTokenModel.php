@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BloggerModel extends Model {
+class AccessTokenModel extends Model {
     protected $DBGroup          = 'default';
-    protected $table            = 'bloggers';
+    protected $table            = 'accesstoken';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['userid', 'gbid', 'title', 'url', 'posted', 'active'];
+    protected $allowedFields    = ["userid", "token", "isvalid", "expired_at"];
 
     // Dates
     protected $useTimestamps = true;

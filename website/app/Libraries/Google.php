@@ -70,13 +70,33 @@ class Google {
 		$oauth2Service = new OAuth2($this->client);
 		$userInfo = $oauth2Service->userinfo->get();
 
-		// Now you can access user details
-		$userId = $userInfo->getId();
-		$userName = $userInfo->getName();
-		$userEmail = $userInfo->getEmail();
-		$userProfilePicture = $userInfo->getPicture();
-		$verifiedEmail = $userInfo->getVerifiedEmail();
-		$gender = $userInfo->getGender();
-		var_dump($userId,  $userName, $userEmail, $userProfilePicture, $verifiedEmail, $gender);
+		// Get user details
+		if ($userInfo && !empty($userInfo->getId()) && !empty($userInfo->getName()) && !empty($userInfo->getEmail())) {
+			$gender = $userInfo->getGender() ?? 'Unknown';
+			return [
+				"gid" => $userInfo->getId(),
+				"name" => $userInfo->getName(),
+				"email" => $userInfo->getEmail(),
+				"picture" => $userInfo->getPicture(),
+				"gender" => $gender,
+				"email_verified" => $userInfo->getVerifiedEmail(),
+			];
+		} else {
+			return false;
+		}
+	}
+
+	public function getBlogs() {
+		$blogs = [];
+		$blogger = new Blogger($this->client);
+		$blogList = $blogger->blogs->listByUser('self');
+		foreach ($blogList->getItems() as $blog) {
+			array_push($blogs, [
+				"gbid" => $blog->getId(),
+				"name" => $blog->getName(),
+				"url" => $blog->getUrl(),
+			]);
+		}
+		return $blogs;
 	}
 }
