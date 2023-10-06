@@ -32,15 +32,29 @@ function login_user_id() {
 	return FALSE;
 }
 
-function login_user($userid) {
-	var_dump($userid);
+function get_login_user($field = NULL) {
+	if (is_login()) {
+		$user = session("loggedin_user_data");
+		if (empty($field)) {
+			return $user;
+		} else {
+			return isset($user[$field]) ? $user[$field] : FALSE;
+		}
+	}
+	return FALSE;
+}
+
+
+function login_user($userid, $user) {
 	if (session()->has("user_loggedin") && session("user_loggedin")) {
 		return FALSE;
 	} else {
 		session()->set([
 			"login_user_id" => $userid,
-			"user_loggedin" => TRUE
+			"user_loggedin" => TRUE,
+			"loggedin_user_data" => $user,
 		]);
+		return TRUE;
 	}
 	return FALSE;
 }

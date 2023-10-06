@@ -41,7 +41,10 @@ class Blogs extends BaseController {
                 $blog = $this->_blog_data($data["url"], 1);
                 if (isset($blog["gbid"]) && !empty($blog["gbid"])) {
                     $blogsModel = new BlogsModel();
-                    $query = $blogsModel->select('id')->where('gbid', $blog["gbid"])->get();
+                    $query = $blogsModel->select('id')
+                        ->where('gbid', $blog["gbid"])
+                        ->where("userid", login_user_id())
+                        ->get();
                     if ($query->getNumRows() == 0) {
                         $insert = $blogsModel->insert([
                             "userid" => login_user_id(),

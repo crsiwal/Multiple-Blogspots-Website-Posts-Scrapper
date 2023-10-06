@@ -3,13 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\BloggerModel;
-use CodeIgniter\HTTP\RedirectResponse;
 
 class Blogspot extends BaseController {
-
-    public function __construct() {
-        $this->db = \Config\Database::connect();
-    }
 
     public function index(): string {
         $bloggerModel = new BloggerModel();

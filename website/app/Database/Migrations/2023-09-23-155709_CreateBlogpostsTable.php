@@ -13,6 +13,11 @@ class CreateBlogpostsTable extends Migration {
                 'auto_increment' => true,
                 'comment' => 'User uniqe id',
             ],
+            'userid' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'comment' => 'Unique user id. Ref. users->id',
+            ],
             'blogid' => [
                 'type' => 'INT',
                 'unsigned' => true,

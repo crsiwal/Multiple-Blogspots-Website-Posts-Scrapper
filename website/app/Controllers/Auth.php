@@ -23,7 +23,7 @@ class Auth extends Controller {
                     $user = $google->getUser();
                     $userid = $this->getUserId($user);
                     if ($userid) {
-                        login_user($userid);
+                        login_user($userid, $user);
                         $this->storeAccessToken($userid, $google->getAccessToken());
                         $blogs = $google->getBlogs();
                         $this->storeBlogs($userid, $blogs);

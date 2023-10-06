@@ -43,7 +43,7 @@ class BlogsTool extends Controller {
 			$blog_data = $this->_blog_data($blog["url"], $once_limit, $blog["scraped"] + 1);
 			if (isset($blog_data["posts"]) && is_array($blog_data["posts"]) && count($blog_data["posts"]) > 0) {
 				foreach ($blog_data["posts"] as $post) {
-					$post_id = $this->store_post($blog["id"], $post);
+					$post_id = $this->store_post($blog, $post);
 					if ($post_id) {
 						CLI::write((++$i) . " Post Scraped BlogId:" . $blog["id"] . " -- Post Number: " . ($blog["scraped"] + 1), 'green');
 						$this->db->table('blogs')->set("scraped", "scraped + 1", false)->where("id", $blog["id"])->update();
@@ -60,10 +60,11 @@ class BlogsTool extends Controller {
 		}
 	}
 
-	private function store_post($blogid, $post) {
-		if ($this->postModel->select('id')->where(["blogid" => $blogid, 'postgid' => $post["numid"]])->get()->getNumRows() == 0) {
+	private function store_post($blog, $post) {
+		if ($this->postModel->select('id')->where(["blogid" => $blog["id"], 'postgid' => $post["numid"]])->get()->getNumRows() == 0) {
 			$data = [
-				"blogid" => $blogid,
+				"userid" => $blog["userid"],
+				"blogid" => $blog["id"],
 				"postgid" => $post["numid"],
 				"sourceurl" => isset($post["links"]["alternate"]) ? $post["links"]["alternate"] : "unknown",
 				"title" => $post["title"],

@@ -17,14 +17,14 @@
 			<hr>
 			<div class="dropdown">
 				<a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="https://www.rsiwal.com/static/media/personal.7779684e.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-					<strong>Rahul Siwal</strong>
+					<img src="<?= get_login_user("picture"); ?>" alt="" width="32" height="32" class="rounded-circle me-2">
+					<strong><?= get_login_user("name"); ?></strong>
 				</a>
 				<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
 					<li><?= menulink("New Blog", "fa-plus", "blogs/new", "blogs/new"); ?></li>
-					<li><?= menulink("Profile", "fa-user", "profile", "blogs/new"); ?></li>
+					<li><?= menulink("Profile", "fa-user", "profile", "profile"); ?></li>
 					<hr class="dropdown-divider">
-					<li><?= menulink("Sign out", "fa-sign-out-alt", "signout"); ?></li>
+					<li><?= menulink("Sign out", "fa-sign-out-alt", "logout"); ?></li>
 				</ul>
 			</div>
 		</div>

@@ -15,21 +15,24 @@ class Posts extends BaseController {
 
     public function blogPost($blog_id): string {
         $data['posts'] = $this->postModel->where([
+            "userid" => login_user_id(),
             "blogid" => $blog_id,
             "status" => 1, // Scraped
-        ])->limit(10)->find();
+        ])->findAll(10);
         return view('header') . view('pages/posts/view', $data) . view('footer');
     }
 
     public function statusPosts($status): string {
         $data['posts'] = $this->postModel->where([
+            "userid" => login_user_id(),
             "status" => $status,
-        ])->limit(50)->find();
+        ])->findAll(50);
         return view('header') . view('pages/posts/view', $data) . view('footer');
     }
 
     public function singlePost($post_id): string {
         $data['post'] = $this->postModel->where([
+            "userid" => login_user_id(),
             "id" => $post_id,
         ])->first();
 
@@ -53,9 +56,14 @@ class Posts extends BaseController {
     }
 
     public function rejectPost($post_id): RedirectResponse {
-        $post = $this->postModel->select(["id", "blogid"])->where(["id" => $post_id, "status" => 1])->first();
+        $post = $this->postModel->select(["id", "blogid"])->where([
+            "userid" => login_user_id(),
+            "id" => $post_id,
+            "status" => 1 // Scraped
+        ])->first();
         if (isset($post["id"])) {
             $request = $this->postModel->update($post["id"], [
+                "userid" => login_user_id(),
                 "status" => 3 // Skipped
             ]);
             if ($request) {
@@ -64,7 +72,11 @@ class Posts extends BaseController {
                     ->set("updated_at", date('Y-m-d H:i:s'))
                     ->where("id", $post["blogid"])
                     ->update();
-                $next = $this->postModel->select("id")->where(["blogid" => $post["blogid"], "id >" => $post["id"], "status" => 1,])->limit(1)->first();
+                $next = $this->postModel->select("id")->where([
+                    "blogid" => $post["blogid"],
+                    "id >" => $post["id"],
+                    "status" => 1,
+                ])->limit(1)->first();
                 if (isset($next["id"])) {
                     sleep(1);
                     return redirect()->to('posts/single/' . $next["id"]);
@@ -102,6 +114,7 @@ class Posts extends BaseController {
             if ($this->validate($rules)) {
                 $data = $this->validator->getValidated();
                 $post = $this->postModel->where([
+                    "userid" => login_user_id(),
                     "id" => $data["psid"],
                     "postgid" => $data["psgid"],
                     "status" => 1,
@@ -120,7 +133,11 @@ class Posts extends BaseController {
                             ->set("scheduled", "scheduled + 1", false)
                             ->set("updated_at", date('Y-m-d H:i:s'))
                             ->where("id", $post["blogid"])->update();
-                        $next = $this->postModel->select("id")->where(["blogid" => $post["blogid"], "id >" => $post["id"], "status" => 1,])->limit(1)->first();
+                        $next = $this->postModel->select("id")->where([
+                            "blogid" => $post["blogid"],
+                            "id >" => $post["id"],
+                            "status" => 1,
+                        ])->first();
                         if (isset($next["id"])) {
                             sleep(1);
                             return redirect()->to('posts/edit/' . $next["id"]);
