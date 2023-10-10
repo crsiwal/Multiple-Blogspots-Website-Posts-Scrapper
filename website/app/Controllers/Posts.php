@@ -107,7 +107,7 @@ class Posts extends BaseController {
                 'psgid' => 'required',
                 'title' => 'required|max_length[512]',
                 'slug' => 'required|max_length[512]',
-                'summery' => 'required|max_length[160]',
+                'summary' => 'required|max_length[160]',
                 'tags' => 'required|max_length[512]',
                 'body' => 'required',
             ];
@@ -123,10 +123,11 @@ class Posts extends BaseController {
                     $status = $this->postModel->update($post["id"], [
                         "title" => $data["title"],
                         "slug" => $data["slug"],
-                        "summery" => $data["summery"],
+                        "summary" => $data["summary"],
                         "content" => $data["body"],
                         "tags" => $data["tags"],
                         "status" => 4, // Scheduled
+                        "post_at" => date('Y-m-d H:i:s')
                     ]);
                     if ($status) {
                         $this->db->table('blogs')

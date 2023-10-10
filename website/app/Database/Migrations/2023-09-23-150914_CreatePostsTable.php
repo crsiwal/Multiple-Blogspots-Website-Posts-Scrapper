@@ -43,11 +43,11 @@ class CreatePostsTable extends Migration {
                 'constraint' => 512,
                 'comment' => 'Post unique slug in english for seo',
             ],
-            'summery' => [
+            'summary' => [
                 'type' => 'VARCHAR',
                 'constraint' => 512,
                 'default' => null,
-                'comment' => 'Post short summery for search for seo',
+                'comment' => 'Post short summary for search for seo',
             ],
             'content' => [
                 'type' => 'TEXT',
@@ -65,7 +65,12 @@ class CreatePostsTable extends Migration {
                 'default'    => 0,
                 'comment' => 'Status of post 0:pending,1:Scraped,2:Draft,3:Skipped,4:Scheduled,5:Posted',
             ],
-            'posttime' => [
+            'post_at' => [
+                'type' => 'DATETIME',
+                'default' => null,
+                'comment' => 'Timestamp when post can be posted to blogspot',
+            ],
+            'posted_at' => [
                 'type' => 'DATETIME',
                 'default' => null,
                 'comment' => 'Timestamp when post will be posted to blogspot',

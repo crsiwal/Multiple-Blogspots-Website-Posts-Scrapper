@@ -1,6 +1,6 @@
 <?php
 /*
-Syntax: php public/index.php tools crawler
+	Syntax: php public/index.php tools scrapblogs
 */
 
 namespace App\Controllers;

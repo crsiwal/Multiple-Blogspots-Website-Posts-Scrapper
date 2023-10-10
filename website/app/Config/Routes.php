@@ -38,4 +38,7 @@ $routes->group('blogspot', function ($routes) {
 	$routes->get('', 'Blogspot::index');
 });
 
-$routes->cli('tools/crawler', 'BlogsTool::crawler');
+$routes->group('tools', function ($routes) {
+	$routes->cli('scrapblogs', 'BlogsTool::crawler');
+	$routes->cli('batchpost', 'PostingTool::post');
+});

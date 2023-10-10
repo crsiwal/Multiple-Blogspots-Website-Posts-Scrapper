@@ -29,7 +29,7 @@
 				} else {
 				?>
 					<div class="col-12 col-md-6">
-						<button type="submit" class="btn btn-danger ms-1 px-5">Only summery available</button>
+						<button type="submit" class="btn btn-danger ms-1 px-5">Only summary available</button>
 					</div>
 			<?php
 				}

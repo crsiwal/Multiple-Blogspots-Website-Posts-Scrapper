@@ -24,7 +24,7 @@ class AuthFilter implements FilterInterface {
      */
     public function before(RequestInterface $request, $arguments = null) {
         $controller = class_basename(service('router')->controllerName());
-        if (!in_array($controller, ["Auth"])) {
+        if (!in_array($controller, ["Auth"]) && !$request->isCLI()) {
             if (!session()->has("user_loggedin") || session("user_loggedin") != true) {
                 return redirect()->to('/login'); // Redirect to login page if user is not logged in
             }

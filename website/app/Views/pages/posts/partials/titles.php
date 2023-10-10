@@ -9,6 +9,6 @@
 </div>
 
 <div class="col-12 mb-3">
-	<label for="postsummery" class="form-label">Post Summery</label>
-	<textarea name="summery" class="form-control editor" id="postsummery" rows="5"><?= isset($post["summery"]) ? strip_tags($post["summery"], '<h1><p><img><div><ul><ol><li><table><th><tr><td>') : ""; ?></textarea>
+	<label for="postsummary" class="form-label">Post Summary</label>
+	<textarea name="summary" class="form-control editor" id="postsummary" rows="5"><?= isset($post["summary"]) ? strip_tags($post["summary"], '<h1><p><img><div><ul><ol><li><table><th><tr><td>') : ""; ?></textarea>
 </div>

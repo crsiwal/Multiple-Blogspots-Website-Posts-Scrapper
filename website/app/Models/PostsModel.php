@@ -12,7 +12,7 @@ class PostsModel extends Model {
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['userid', "blogid", "postgid", "title", "slug", "summery", "content", "tags", "status", "posttime"];
+    protected $allowedFields    = ['userid', "blogid", "postgid", "title", "slug", "summary", "content", "tags", "status", "post_at", "posted_at"];
 
     // Dates
     protected $useTimestamps = true;
