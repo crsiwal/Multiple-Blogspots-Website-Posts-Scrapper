@@ -30,13 +30,12 @@ class PostingTool extends Controller {
 			"status" => 4 // Scheduled
 		])->limit($this->maxPosts)->orderBy("post_at", "ASC")->find();
 		if (is_array($posts) && count($posts) > 0) {
-			$accessTokenModel = new AccessTokenModel();
 			$activeUser = 0;
 			$google = "";
-			$accessToken = "";
 			foreach ($posts as $post) {
 				if ($activeUser != $post["userid"]) {
 					$google = new Google($post["userid"]);
+					$activeUser = $post["userid"];
 				}
 				$blogId = "1017300391299230992";
 				$blogPost = $google->newPost($blogId, [
@@ -48,10 +47,7 @@ class PostingTool extends Controller {
 					"author" => ["name" => "Data Center"]
 				]);
 				if (isset($blogPost["id"])) {
-					$postsModel->update($post["id"], [
-						"status" => 5, // Posted
-						"posted_at" => date('Y-m-d H:i:s')
-					]);
+					$postsModel->update($post["id"], ["status" => 5, "posted_at" => date('Y-m-d H:i:s')]); // Posted
 				}
 			}
 		}
