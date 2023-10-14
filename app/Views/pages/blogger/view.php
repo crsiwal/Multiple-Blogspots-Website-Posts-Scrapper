@@ -22,7 +22,7 @@ use CodeIgniter\I18n\Time;
 						<tr>
 							<th scope="row"><?= $blog["id"]; ?></th>
 							<td>
-								<div><?= anchor("posts/blog/" . $blog["id"], $blog["title"]); ?></div>
+								<div><?= anchor("posts/created/" . $blog["id"], $blog["title"]); ?></div>
 								<small><?= $blog["url"]; ?></small>
 							</td>
 							<td><?= $blog["posted"]; ?></td>

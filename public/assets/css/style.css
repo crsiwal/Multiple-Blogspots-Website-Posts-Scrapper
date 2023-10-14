@@ -3,6 +3,10 @@ img.single-post-img {
 	width: 100%;
 }
 
+.pointer:hover {
+	cursor: pointer !important;
+}
+
 /* TinyMCE css */
 .tox-notifications-container,
 .tox-statusbar__branding {

@@ -12,7 +12,7 @@
 				<li><?= menulink("Scheduled", "fa-clock", "posts/scheduled", "posts/scheduled"); ?></li>
 				<li><?= menulink("Posted", "fa-check-double", "posts/created", "posts/created"); ?></li>
 				<li><?= menulink("Rejected", "fa-trash", "posts/rejected", "posts/rejected"); ?></li>
-				<li><?= menulink("Blogspot", "fa-blogger-b", "blogspot", "blogspot", true); ?></li>
+				<li><?= menulink("Bloggers", "fa-blogger-b", "bloggers", "bloggers", true); ?></li>
 			</ul>
 			<hr>
 			<div class="dropdown">

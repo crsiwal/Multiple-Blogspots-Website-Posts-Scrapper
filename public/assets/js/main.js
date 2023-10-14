@@ -7,21 +7,21 @@ $(document).ready(function () {
 		height: 580,
 		skin: 'borderless',
 		remove_script_host: false,
-		highlight_on_focus: true,
+		highlight_on_focus: false,
 		plugins: 'autolink link image media wordcount advcode table autosave fullscreen',
 		toolbar: 'image media link underline checklist numlist bullist align outdent indent forecolor backcolor table fullscreen code blocks fontsize',
 	});
 
 	tinymce.init({
-		selector: "#postsummery",
+		selector: "#postsummary",
 		menubar: false,
 		relative_urls: false,
 		convert_urls: false,
 		height: 200,
 		remove_script_host: false,
-		highlight_on_focus: true,
+		highlight_on_focus: false,
 		plugins: 'wordcount autosave',
-		toolbar: 'fontsize',
+		toolbar: false,
 	});
 
 	tinymce.init({
@@ -34,5 +34,29 @@ $(document).ready(function () {
 		plugins: 'autolink link image media wordcount advcode table autosave fullscreen',
 		toolbar: 'image media link underline checklist numlist bullist align outdent indent forecolor backcolor table fullscreen code blocks fontsize',
 	});
+
+
+	$("#posttags").select2({
+		theme: "bootstrap-5",
+		closeOnSelect: false,
+		tags: [],
+		ajax: {
+			url: "/bloggers/labels/json",
+			dataType: 'json',
+			type: "GET",
+			quietMillis: 1000,
+			data: function (params) {
+				return {
+					term: params.term,
+					blogger: function () {
+						return $("input[name='blogger[]']:checked").map(function () {
+							return $(this).val();
+						}).get();
+					}
+				};
+			}
+		}
+	});
+
 });
 

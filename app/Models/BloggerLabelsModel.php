@@ -4,21 +4,19 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AccessTokenModel extends Model {
+class BloggerLabelsModel extends Model {
     protected $DBGroup          = 'default';
-    protected $table            = 'accesstoken';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $table            = 'bloggerlabels';
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["userid", "token", "isvalid", "expired_at"];
+    protected $allowedFields    = ["bloggerid", "label"];
 
     // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+    protected $updatedField  = false;
 
     // Validation
     protected $validationRules      = [];

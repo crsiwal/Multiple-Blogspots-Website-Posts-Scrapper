@@ -2,9 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Models\BloggerLabelsModel;
+use App\Models\BloggerModel;
+use App\Models\BloggerpostsModel;
 use KubAT\PhpSimple\HtmlDomParser;
 use App\Models\PostsModel;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class Posts extends BaseController {
 
@@ -22,11 +26,17 @@ class Posts extends BaseController {
         return view('header') . view('pages/posts/view', $data) . view('footer');
     }
 
-    public function statusPosts($status): string {
-        $data['posts'] = $this->postModel->where([
+    public function statusPosts($status, $blogId = 0): string {
+        $filters = [
             "userid" => login_user_id(),
             "status" => $status,
-        ])->findAll(50);
+        ];
+
+        if ($blogId != 0) {
+            $filters["blogid"] = $blogId;
+        }
+
+        $data['posts'] = $this->postModel->where($filters)->findAll(50);
         return view('header') . view('pages/posts/view', $data) . view('footer');
     }
 
@@ -93,6 +103,13 @@ class Posts extends BaseController {
         ])->first();
 
         if (isset($data['post']["id"])) {
+            /* List the blogger */
+            $bloggerModel = new BloggerModel();
+            $bloggers = $bloggerModel->where(["userid" => login_user_id(), "active" => true])->find();
+            $data['bloggers'] = array_column($bloggers, "title", "id");
+            /* List all the tags */
+
+
             helper('form');
             return view('header') . view('pages/posts/edit', $data) . view('footer');
         } else {
@@ -107,12 +124,15 @@ class Posts extends BaseController {
                 'psgid' => 'required',
                 'title' => 'required|max_length[512]',
                 'slug' => 'required|max_length[512]',
-                'summary' => 'required|max_length[160]',
-                'tags' => 'required|max_length[512]',
+                'summary' => 'max_length[160]',
+                'tags' => 'required',
                 'body' => 'required',
+                'blogger' => 'required',
             ];
+
             if ($this->validate($rules)) {
                 $data = $this->validator->getValidated();
+                $data["tags"] = is_array($data["tags"]) && count($data["tags"]) > 0 ? $data["tags"] : [];
                 $post = $this->postModel->where([
                     "userid" => login_user_id(),
                     "id" => $data["psid"],
@@ -120,30 +140,94 @@ class Posts extends BaseController {
                     "status" => 1,
                 ])->first();
                 if (isset($post["id"])) {
-                    $status = $this->postModel->update($post["id"], [
-                        "title" => $data["title"],
-                        "slug" => $data["slug"],
-                        "summary" => $data["summary"],
-                        "content" => $data["body"],
-                        "tags" => $data["tags"],
-                        "status" => 4, // Scheduled
-                        "post_at" => date('Y-m-d H:i:s')
-                    ]);
-                    if ($status) {
-                        $this->db->table('blogs')
-                            ->set("scheduled", "scheduled + 1", false)
-                            ->set("updated_at", date('Y-m-d H:i:s'))
-                            ->where("id", $post["blogid"])->update();
-                        $next = $this->postModel->select("id")->where([
-                            "blogid" => $post["blogid"],
-                            "id >" => $post["id"],
-                            "status" => 1,
-                        ])->first();
-                        if (isset($next["id"])) {
-                            sleep(1);
-                            return redirect()->to('posts/edit/' . $next["id"]);
+                    try {
+                        /* Save post content */
+                        $this->postModel->update($post["id"], [
+                            "title" => $data["title"],
+                            "slug" => $data["slug"],
+                            "summary" => $data["summary"],
+                            "content" => $data["body"],
+                            "tags" => implode(",", $data["tags"]),
+                        ]);
+
+
+                        /* Start the process to  */
+                        $this->db->transBegin();
+                        $status = $this->postModel->update($post["id"], [
+                            "title" => $data["title"],
+                            "slug" => $data["slug"],
+                            "summary" => $data["summary"],
+                            "content" => $data["body"],
+                            "tags" => implode(",", $data["tags"]),
+                            "status" => 4, // Scheduled
+                            "post_at" => date('Y-m-d H:i:s')
+                        ]);
+
+                        if ($status) {
+                            /* Schedule this post to send to multiple blogs */
+                            $bloggerpostsModel = new BloggerpostsModel();
+                            if (is_array($data["blogger"]) && count($data["blogger"]) > 0) {
+                                $bloggerModel = new BloggerModel();
+                                $bloggerLabelsModel = new BloggerLabelsModel();
+
+                                /* Delete allready added bloggers */
+                                $bloggerpostsModel->where("postid", $post["id"])->delete();
+
+                                /* Get the selected bloggers */
+                                $bloggers = $bloggerModel->where("userid", login_user_id())->find($data["blogger"]);
+                                if (count($bloggers) > 0) {
+                                    foreach ($bloggers as $blogger) {
+                                        /* Map post to selected bloggers to post */
+                                        $bloggerpostsModel->insert([
+                                            "postid" => $post["id"],
+                                            "bloggerid" => $blogger["id"],
+                                        ]);
+
+                                        /* Save labels selected for this post */
+                                        if (count($data["tags"]) > 0) {
+                                            $data = array_map(function ($lebel) use ($blogger) {
+                                                return [
+                                                    "bloggerid" => $blogger["id"],
+                                                    "label" => $lebel
+                                                ];
+                                            }, $data["tags"]);
+
+                                            $bloggerLabelsModel->ignore(true)->insertBatch($data);
+                                        }
+                                    }
+                                }
+                            }
+
+                            /* Set user post scheduled. Increase 1 count */
+                            $this->db->table('blogs')
+                                ->set("scheduled", "scheduled + 1", false)
+                                ->set("updated_at", date('Y-m-d H:i:s'))
+                                ->where("id", $post["blogid"])->update();
+
+                            if ($this->db->transStatus() === false) {
+                                $this->db->transRollback();
+                                \Config\Services::session()->setFlashdata('error', "Unable to post");
+                            } else {
+                                $this->db->transCommit();
+                                /* Get the next Post and send user to it */
+                                $next = $this->postModel->select("id")->where([
+                                    "blogid" => $post["blogid"],
+                                    "id >" => $post["id"],
+                                    "status" => 1,
+                                ])->first();
+                                if (isset($next["id"])) {
+                                    sleep(1);
+                                    return redirect()->to('posts/edit/' . $next["id"]);
+                                }
+                            }
+                        } else {
+                            \Config\Services::session()->setFlashdata('error', "Unable to save post content");
                         }
+                    } catch (DatabaseException $e) {
+                        \Config\Services::session()->setFlashdata('error', "Unable to post");
                     }
+                } else {
+                    \Config\Services::session()->setFlashdata('error', "Unable to find this post or you are not authorized");
                 }
             } else {
                 $errors = $this->validator->getErrors();
@@ -153,6 +237,7 @@ class Posts extends BaseController {
         } else {
             \Config\Services::session()->setFlashdata('error', 'Unable to handle your request.');
         }
+
         return redirect()->back();
     }
 }

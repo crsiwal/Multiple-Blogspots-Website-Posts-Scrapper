@@ -12,7 +12,7 @@ function vd() {
 
 function menulink($name, $icon, $path = "", $activePath = "", $brand = false) {
 	$slug = uri_string();
-	$active = (trim($slug, "/") == $activePath);
+	$active =  empty($activePath) ? false : (strpos($slug, $activePath) !== false ? true : false);
 ?>
 	<a href="<?= base_url($path); ?>" class="nav-link <?= $active ? "text-primary" : " link-dark"; ?>">
 		<i class="<?= ($brand) ? "fab" : ($active ? "fas" : "far"); ?> <?= $icon; ?> me-2"></i>

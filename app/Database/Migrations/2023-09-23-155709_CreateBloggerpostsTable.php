@@ -11,58 +11,45 @@ class CreateBlogpostsTable extends Migration {
                 'type' => 'INT',
                 'unsigned' => true,
                 'auto_increment' => true,
-                'comment' => 'User uniqe id',
-            ],
-            'userid' => [
-                'type' => 'INT',
-                'unsigned' => true,
-                'comment' => 'Unique user id. Ref. users->id',
-            ],
-            'blogid' => [
-                'type' => 'INT',
-                'unsigned' => true,
-                'comment' => 'Unique id of Blog ref blogs->id',
+                'comment' => 'Post uniqe id',
             ],
             'postid' => [
                 'type' => 'INT',
                 'unsigned' => true,
                 'comment' => 'Unique id of Blog ref posts->id',
             ],
-            'title' => [
-                'type' => 'VARCHAR',
-                'constraint' => 512,
-                'comment' => 'Post title',
+            'bloggerid' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'comment' => 'Unique id of blog ref blogger->id',
             ],
             'postgbid' => [
                 'type' => 'VARCHAR',
                 'constraint' => 64,
+                'default' => null,
                 'comment' => 'Post blogger unique id',
             ],
             'posturl' => [
                 'type' => 'VARCHAR',
-                'constraint' => 512,
-                'comment' => 'Post unique url',
+                'constraint' => 1024,
+                'default' => null,
+                'comment' => 'Post blogspot unique url',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
-                'comment' => 'Timestamp of when the post was created',
+                'comment' => 'Timestamp when the record was created',
             ],
             'updated_at' => [
                 'type' => 'DATETIME',
                 'default' => null,
-                'comment' => 'Timestamp of when the post was last updated',
-            ],
-            'deleted_at' => [
-                'type' => 'DATETIME',
-                'default' => null,
-                'comment' => 'Timestamp of when the post was marked deleted',
+                'comment' => 'Timestamp of when the record was last updated',
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('blogposts');
+        $this->forge->createTable('bloggerposts');
     }
 
     public function down() {
-        $this->forge->dropTable('blogposts');
+        $this->forge->dropTable('bloggerposts');
     }
 }

@@ -41,11 +41,6 @@ class CreateAccessTokenTable extends Migration {
                 'default' => null,
                 'comment' => 'Timestamp of when the blogger was last updated',
             ],
-            'deleted_at' => [
-                'type' => 'DATETIME',
-                'default' => null,
-                'comment' => 'Timestamp of when the blogger was marked deleted',
-            ],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('accesstoken');
