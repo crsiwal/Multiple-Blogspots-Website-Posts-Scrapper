@@ -20,7 +20,7 @@
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 			<script src="https://cdn.tiny.cloud/1/h82tc4fozcxv5d1vmhi466melatmoa5791jkee9jzup7nijy/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-			<script src="<?= base_url("/vendor/bootstrap/js/bootstrap.bundle.min.js"); ?>"></script>
+			<script src="<?= base_url("vendors/bootstrap/js/bootstrap.bundle.min.js"); ?>"></script>
 			<script src="<?= base_url("assets/js/main.js"); ?>"></script>
 		</footer>
 	</div>
