@@ -30,7 +30,7 @@ use CodeIgniter\I18n\Time;
 							</td>
 							<td><?= $blog["posts"]; ?></td>
 							<td><?= $blog["scraped"]; ?></td>
-							<td><?= $blog["scheduled"]; ?></td>
+							<td><?= ($blog["scheduled"] - $blog["posted"]); ?></td>
 							<td><?= $blog["posted"]; ?></td>
 							<td><?= $blog["rejected"]; ?></td>
 							<td><?= (empty($blog["updated_at"])) ? "Never" : Time::parse($blog["updated_at"])->humanize(); ?></td>
