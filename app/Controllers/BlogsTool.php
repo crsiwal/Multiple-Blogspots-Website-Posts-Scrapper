@@ -16,7 +16,7 @@ class BlogsTool extends Controller {
 		$this->blogModel = new BlogsModel();
 		$this->postModel = new PostsModel();
 		$this->db = \Config\Database::connect();
-		$this->maxBlogPost = 20;
+		$this->maxBlogPost = 2000;
 	}
 
 	public function crawler() {
