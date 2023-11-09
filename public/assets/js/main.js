@@ -8,7 +8,7 @@ $(document).ready(function () {
 		skin: 'borderless',
 		remove_script_host: false,
 		highlight_on_focus: false,
-		plugins: 'autolink link image media wordcount advcode table autosave fullscreen',
+		plugins: 'code autolink link image media wordcount table autosave fullscreen',
 		toolbar: 'image media link underline checklist numlist bullist align outdent indent forecolor backcolor table fullscreen code blocks fontsize',
 	});
 
