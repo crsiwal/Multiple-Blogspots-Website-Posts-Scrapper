@@ -58,6 +58,7 @@ class PostingTool extends Controller {
 						]);
 						if (isset($blogPost["id"])) {
 							$postsModel->update($post["id"], ["status" => 5, "posted_at" => date('Y-m-d H:i:s')]); // Posted
+							$this->db->table('blogs')->set("posted", "posted + 1", false)->where("id", $post["blogid"])->update();
 						}
 					}
 				}
