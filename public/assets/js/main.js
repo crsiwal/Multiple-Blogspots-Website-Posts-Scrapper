@@ -8,8 +8,8 @@ $(document).ready(function () {
 		skin: 'borderless',
 		remove_script_host: false,
 		highlight_on_focus: false,
-		plugins: 'code autolink link image media wordcount table autosave fullscreen',
-		toolbar: 'image media link underline checklist numlist bullist align outdent indent forecolor backcolor table fullscreen code blocks fontsize',
+		plugins: 'emoticons searchreplace preview code visualblocks lists autolink link image media wordcount table autosave fullscreen',
+		toolbar: 'emoticons image media link code underline checklist numlist bullist align outdent indent forecolor backcolor table fontsize searchreplace visualblocks preview fullscreen',
 	});
 
 	tinymce.init({
@@ -31,8 +31,8 @@ $(document).ready(function () {
 		convert_urls: false,
 		remove_script_host: false,
 		highlight_on_focus: true,
-		plugins: 'autolink link image media wordcount advcode table autosave fullscreen',
-		toolbar: 'image media link underline checklist numlist bullist align outdent indent forecolor backcolor table fullscreen code blocks fontsize',
+		plugins: 'emoticons searchreplace preview code visualblocks lists autolink link image media wordcount table autosave fullscreen',
+		toolbar: 'emoticons image media link code underline checklist numlist bullist align outdent indent forecolor backcolor table fontsize searchreplace visualblocks preview fullscreen',
 	});
 
 
