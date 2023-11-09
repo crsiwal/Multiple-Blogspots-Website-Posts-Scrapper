@@ -7,7 +7,7 @@
 			</a>
 			<hr>
 			<ul class="nav nav-pills flex-column mb-auto ">
-				<li><?= menulink("Home", "fa-home", "", ""); ?></li>
+				<li><?= menulink("Home", "fa-home", "/", "/"); ?></li>
 				<li><?= menulink("Draft", "fa-stream", "posts/draft", "posts/draft"); ?></li>
 				<li><?= menulink("Scheduled", "fa-clock", "posts/scheduled", "posts/scheduled"); ?></li>
 				<li><?= menulink("Posted", "fa-check-double", "posts/created", "posts/created"); ?></li>

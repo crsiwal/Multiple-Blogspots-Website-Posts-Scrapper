@@ -14,6 +14,29 @@ class Bloggers extends BaseController {
         return view('header') . view('pages/blogger/view', $data) . view('footer');
     }
 
+    public function activeBlogger($bloggerId = 0) {
+        $bloggerModel = new BloggerModel();
+        if ($bloggerId == 0) {
+            if (empty(get_active_blogger_id())) {
+                $userBlogger = $bloggerModel->where("userid", login_user_id())->first();
+                if (isset($userBlogger->id)) {
+                    set_active_blogger_id($userBlogger->id);
+                    return redirect()->to("/");
+                }
+            } else {
+                return redirect()->to("/");
+            }
+        } else {
+            $userBlogger = $bloggerModel->where(["id" => $bloggerId, "userid", login_user_id()])->first();
+            if (isset($userBlogger->id)) {
+                set_active_blogger_id($userBlogger->id);
+                return redirect()->to("/");
+            }else{
+                
+            }
+        }
+    }
+
     public function labels() {
         $term = $this->request->getGet('term');
         $blogers = $this->request->getGet('blogger');

@@ -44,6 +44,15 @@ function get_login_user($field = NULL) {
 	return FALSE;
 }
 
+function get_active_blogger_id() {
+	return (session()->has("active_blogger_id")) ? session("active_blogger_id") : NULL;
+}
+
+function set_active_blogger_id($bloggerId) {
+	return session()->set([
+		"active_blogger_id" => $bloggerId,
+	]);
+}
 
 function login_user($userid, $user) {
 	if (session()->has("user_loggedin") && session("user_loggedin")) {

@@ -18,10 +18,10 @@ class CreateBlogsTable extends Migration {
                 'unsigned' => true,
                 'comment' => 'Unique user id of user ref. users->id',
             ],
-            'gbid' => [
-                'type' => 'VARCHAR',
-                'constraint' => 128,
-                'comment' => 'Unique blogger id of blog',
+            'bloggerid' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'comment' => 'Unique id of blogger to post data ref blogger->id',
             ],
             'title' => [
                 'type' => 'VARCHAR',
@@ -32,6 +32,11 @@ class CreateBlogsTable extends Migration {
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'comment' => 'base url of blog eg. https://name.blogspot.com',
+            ],
+            'gbid' => [
+                'type' => 'VARCHAR',
+                'constraint' => 128,
+                'comment' => 'Unique blogger id of blog',
             ],
             'posts' => [
                 'type' => 'INT',
