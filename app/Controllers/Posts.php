@@ -132,7 +132,7 @@ class Posts extends BaseController {
 
             if ($this->validate($rules)) {
                 $data = $this->validator->getValidated();
-                $data["tags"] = is_array($data["tags"]) && count($data["tags"]) > 0 ? $data["tags"] : [];
+                $data["tags"] = isset($data["tags"]) && is_array($data["tags"]) && count($data["tags"]) > 0 ? $data["tags"] : [];
                 $post = $this->postModel->where([
                     "userid" => login_user_id(),
                     "id" => $data["psid"],
@@ -149,7 +149,6 @@ class Posts extends BaseController {
                             "content" => $data["body"],
                             "tags" => implode(",", $data["tags"]),
                         ]);
-
 
                         /* Start the process to  */
                         $this->db->transBegin();
@@ -185,14 +184,14 @@ class Posts extends BaseController {
 
                                         /* Save labels selected for this post */
                                         if (count($data["tags"]) > 0) {
-                                            $data = array_map(function ($lebel) use ($blogger) {
+                                            $dataLabels = array_map(function ($lebel) use ($blogger) {
                                                 return [
                                                     "bloggerid" => $blogger["id"],
                                                     "label" => $lebel
                                                 ];
                                             }, $data["tags"]);
 
-                                            $bloggerLabelsModel->ignore(true)->insertBatch($data);
+                                            $bloggerLabelsModel->ignore(true)->insertBatch($dataLabels);
                                         }
                                     }
                                 }
